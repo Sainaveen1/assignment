@@ -10,6 +10,7 @@ import {
 import { Col, Row } from "antd";
 import "./index.css";
 import { useSelector } from "react-redux";
+import AssignmentData from "../../utils/assignment-data.json";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -17,10 +18,13 @@ const RiskCategoryReport = () => {
   const riskCategoryFilters = useSelector(
     (state) => state.riskCategory.filters
   );
+  const timelineFilter = useSelector(
+    (state) => state.timelineFilter.selectedFilter
+  );
   const [chartData, setChartData] = useState(null);
 
   const pieChartDataSet = {
-    data: [8000, 35000, 24000, 87000],
+    data: AssignmentData.defaultReport.piedata[timelineFilter],
     backgroundColor: ["#2B4F81", "#4981CE", "#7EB6FF", "#CAE1FF"],
     // borderColor: ["#2B4F81", "#4981CE", "#7EB6FF", "#CAE1FF"],
     // borderWidth: 5,
@@ -53,7 +57,7 @@ const RiskCategoryReport = () => {
         },
       ],
     });
-  }, [riskCategoryFilters]);
+  }, [riskCategoryFilters, timelineFilter]);
   return (
     <Row>
       <Col span={24} style={{ marginBottom: "10px" }}>
@@ -61,7 +65,7 @@ const RiskCategoryReport = () => {
           Risk Category Report
         </span>
       </Col>
-      <Col span={12}>
+      <Col span={8}>
         <div
           style={{
             width: "300px",
@@ -73,11 +77,7 @@ const RiskCategoryReport = () => {
                 plugins: {
                   responsive: true,
                   legend: {
-                    position: "top",
-                    // onClick:function(event,itemLegend) {
-                    //     console.log(itemLegend);
-                    //     return event;
-                    // }
+                    display: false,
                   },
                   animation: {
                     animateScale: true,
@@ -97,39 +97,40 @@ const RiskCategoryReport = () => {
         </div>
       </Col>
       <Col span={12}>
-        <Row align="center">
-          <Col span={12}>
-            <div className="legen-wrapper">
-              <Row align="middle">
-                <div className="legend-circle"></div>
-                <div className="legend-text">{DATA_EXFILTRATION}</div>
-              </Row>
-            </div>
-          </Col>
-          <Col span={12}>
-            <div className="legen-wrapper">
-              <Row align="middle">
-                <div className="legend-circle"></div>
-                <div className="legend-text">{INSIDER_THREATS}</div>
-              </Row>
-            </div>
-          </Col>
-          <Col span={12}>
-            <div className="legen-wrapper">
-              <Row align="middle">
-                <div className="legend-circle"></div>
-                <div className="legend-text">{COMPROMISED_USERS}</div>
-              </Row>
-            </div>
-          </Col>
-          <Col span={12}>
-            <div className="legen-wrapper">
-              <Row align="middle">
-                <div className="legend-circle"></div>
-                <div className="legend-text">{COMPROMISED_ENDPOINTS}</div>
-              </Row>
-            </div>
-          </Col>
+        <Row align="middle" justify="center" style={{ height: "100%" }}>
+          {riskCategoryFilters.map((item, index) => {
+            const selectedFiltersLength = riskCategoryFilters.filter(
+              (item) => item.selected
+            ).length;
+            return (
+              (!selectedFiltersLength || item.selected) && (
+                <Col span={12} key={item.label}>
+                  <div className="legend-wrapper">
+                    {/* <div>{JSON.stringify(chartData)}</div> */}
+                    <div style={{ paddingLeft: "15px" }}>
+                      <h2
+                        style={{
+                          color: chartData.datasets[0].backgroundColor[index],
+                        }}
+                      >
+                        {chartData && chartData.datasets[0].data[index]}
+                      </h2>
+                    </div>
+                    <Row align="middle">
+                      <div
+                        className="legend-circle"
+                        style={{
+                          backgroundColor:
+                            pieChartDataSet.backgroundColor[index],
+                        }}
+                      ></div>
+                      <div className="legend-text">{item.label}</div>
+                    </Row>
+                  </div>
+                </Col>
+              )
+            );
+          })}
         </Row>
       </Col>
     </Row>

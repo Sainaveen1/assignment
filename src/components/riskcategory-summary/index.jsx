@@ -1,8 +1,12 @@
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import AssignmentData from "../../utils/assignment-data.json";
 
 const RiskCategorySummary = () => {
+  const riskCategoryFilters = useSelector(
+    (state) => state.riskCategory.filters
+  );
   const [tableData, setTableData] = useState();
   const columns = [
     {
@@ -50,8 +54,18 @@ const RiskCategorySummary = () => {
 
   useEffect(() => {
     console.log(AssignmentData);
-    setTableData(AssignmentData.defaultReport.aggregated);
-  }, []);
+    const selectedRiskFilters = riskCategoryFilters.filter(
+      (item) => item.selected
+    );
+    if (selectedRiskFilters.length === 0) {
+      setTableData(AssignmentData.defaultReport.aggregated);
+    } else {
+      const data = AssignmentData.defaultReport.aggregated.filter((item) =>
+        selectedRiskFilters.map((item) => item.label).includes(item.label)
+      );
+      setTableData(data);
+    }
+  }, [riskCategoryFilters]);
 
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
