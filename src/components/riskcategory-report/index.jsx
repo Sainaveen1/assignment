@@ -110,7 +110,9 @@ const RiskCategoryReport = () => {
                     <div style={{ paddingLeft: "15px" }}>
                       <h2
                         style={{
-                          color: chartData.datasets[0].backgroundColor[index],
+                          color: chartData
+                            ? chartData.datasets[0].backgroundColor[index]
+                            : "#000",
                         }}
                       >
                         {chartData && chartData.datasets[0].data[index]}
