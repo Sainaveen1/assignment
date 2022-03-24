@@ -115,7 +115,23 @@ const RiskCategoryReport = () => {
                             : "#000",
                         }}
                       >
-                        {chartData && chartData.datasets[0].data[index]}
+                        {chartData && chartData.datasets[0].data[index]}{" "}
+                        <span
+                          style={{
+                            display: "inline-block",
+                            color: index % 2 == 0 ? "green" : "red",
+                            marginTop: "5px",
+                            transform:
+                              index % 2 === 0
+                                ? "rotate(45deg)"
+                                : "rotate(135deg)",
+                          }}
+                        >
+                          &#8593;
+                        </span>
+                        <span style={{ fontSize: "14px", color: "#000" }}>
+                          {Math.floor(Math.random() * 20 + Math.random() * 10)}%
+                        </span>
                       </h2>
                     </div>
                     <Row align="middle">
