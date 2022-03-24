@@ -14,16 +14,19 @@ const TimeLineFilter = () => {
     dispatch(setSelectedTimeLineFilter(data));
   };
   return (
-    <Row align="middle" justify="end">
-      <Col>
-        <Select
-          style={{ width: "300px" }}
-          options={TIMELINE_FILTER_OPTIONS}
-          onChange={onTimeLineFilterChange}
-          value={selectedTimeLineFilter}
-        ></Select>
-      </Col>
-    </Row>
+    <>
+      <Row align="middle" justify="end">
+        <Col>
+          <h3>Timeline Filter</h3>
+          <Select
+            style={{ width: "300px" }}
+            options={TIMELINE_FILTER_OPTIONS}
+            onChange={onTimeLineFilterChange}
+            value={selectedTimeLineFilter}
+          ></Select>
+        </Col>
+      </Row>
+    </>
   );
 };
 

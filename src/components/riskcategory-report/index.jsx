@@ -11,6 +11,7 @@ import { Col, Row } from "antd";
 import "./index.css";
 import { useSelector } from "react-redux";
 import AssignmentData from "../../utils/assignment-data.json";
+import Title from "antd/lib/typography/Title";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -58,6 +59,13 @@ const RiskCategoryReport = () => {
       ],
     });
   }, [riskCategoryFilters, timelineFilter]);
+
+  const getTotal = () => {
+    if (chartData) {
+      const sum = chartData.datasets[0].data.reduce((a, b) => a + b);
+      return sum > 999 ? `${(sum / 1000).toFixed(2)}K` : sum;
+    }
+  };
   return (
     <Row>
       <Col span={24} style={{ marginBottom: "10px" }}>
@@ -65,10 +73,11 @@ const RiskCategoryReport = () => {
           Risk Category Report
         </span>
       </Col>
-      <Col span={8}>
+      <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
         <div
           style={{
             width: "300px",
+            position: "relative",
           }}
         >
           {chartData && (
@@ -94,6 +103,16 @@ const RiskCategoryReport = () => {
               data={chartData}
             />
           )}
+          <div
+            style={{
+              position: "absolute",
+              top: "52%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+            }}
+          >
+            <Title level={2}>{chartData && getTotal()}</Title>
+          </div>
         </div>
       </Col>
       <Col span={12}>

@@ -129,7 +129,7 @@ const TimeLineChart = () => {
               plugins: {
                 title: {
                   display: true,
-                  text: "Chart.js Bar Chart - Stacked",
+                  text: "No. of Occurences",
                 },
               },
               responsive: true,
