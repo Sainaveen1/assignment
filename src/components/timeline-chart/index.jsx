@@ -1,4 +1,3 @@
-import { Col, Row } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
@@ -33,8 +32,6 @@ const TimeLineChart = () => {
   const timelineFilter = useSelector(
     (state) => state.timelineFilter.selectedFilter
   );
-
-  const [timeLineLabels, setTimeLineLabels] = useState([]);
 
   const riskCategoryFilters = useSelector(
     (state) => state.riskCategory.filters
@@ -83,14 +80,13 @@ const TimeLineChart = () => {
 
   useEffect(() => {
     const chartLabels = getTimeLineChartLabels();
-    setTimeLineLabels(chartLabels);
     setChartData({
       labels: chartLabels,
       datasets: intitalDataSets.filter((dataset) => {
         const selectedRiskFilters = riskCategoryFilters.filter(
           (item) => item.selected
         );
-        if (selectedRiskFilters.length == 0) {
+        if (selectedRiskFilters.length === 0) {
           return true;
         }
         return selectedRiskFilters
@@ -108,7 +104,7 @@ const TimeLineChart = () => {
     const endDate = new Date();
     const tempLabels = [];
     while (
-      (startDate.getMonth() == endDate.getMonth() &&
+      (startDate.getMonth() === endDate.getMonth() &&
         startDate.getDate() <= endDate.getDate()) ||
       (startDate.getMonth() <= endDate.getMonth() && startDate < new Date())
     ) {

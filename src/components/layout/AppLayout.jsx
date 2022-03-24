@@ -1,6 +1,6 @@
 import { Checkbox, Col, Divider, Layout, Menu, Row } from "antd";
 
-import React, { useState } from "react";
+import React from "react";
 import SubMenu from "antd/lib/menu/SubMenu";
 import "./AppLayout.css";
 import { Typography } from "antd";
@@ -8,7 +8,6 @@ import RiskCategorySummary from "../riskcategory-summary";
 import RiskCategoryReport from "../riskcategory-report";
 import TimeLineChart from "../timeline-chart";
 import TimeLineFilter from "../timeline-filter";
-import { RISK_CATEGORY_FILTERS } from "../../utils/constants";
 import {
   checkedCategoryFilter,
   clearCategoryFilters,
@@ -16,7 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const { Title } = Typography;
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const AppLayout = () => {
   const riskCategoryFilters = useSelector(

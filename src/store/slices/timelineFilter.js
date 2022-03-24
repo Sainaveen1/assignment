@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LAST_1_DAY, LAST_1_MONTH, LAST_1_WEEK } from "../../utils/constants";
+import { LAST_1_WEEK } from "../../utils/constants";
 
 export const timelineFilterSlice = createSlice({
   name: "timelineFilter",

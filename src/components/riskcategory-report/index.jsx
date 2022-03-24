@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import {
-  COMPROMISED_ENDPOINTS,
-  COMPROMISED_USERS,
-  DATA_EXFILTRATION,
-  INSIDER_THREATS,
-} from "../../utils/constants";
 import { Col, Row } from "antd";
 import "./index.css";
 import { useSelector } from "react-redux";
@@ -73,7 +67,7 @@ const RiskCategoryReport = () => {
           Risk Category Report
         </span>
       </Col>
-      <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
+      <Col xs={24} md={8} style={{ display: "flex", justifyContent: "center" }}>
         <div
           style={{
             width: "300px",
@@ -95,10 +89,12 @@ const RiskCategoryReport = () => {
                 },
                 elements: {
                   arc: {
-                    borderWidth: 5,
+                    borderWidth: 4,
                     borderColor: "#f0f2f5",
                   },
                 },
+                responsive: true,
+                maintainAspectRatio: true,
               }}
               data={chartData}
             />
@@ -115,7 +111,7 @@ const RiskCategoryReport = () => {
           </div>
         </div>
       </Col>
-      <Col span={12}>
+      <Col xs={24} md={12}>
         <Row align="middle" justify="center" style={{ height: "100%" }}>
           {riskCategoryFilters.map((item, index) => {
             const selectedFiltersLength = riskCategoryFilters.filter(
@@ -138,7 +134,7 @@ const RiskCategoryReport = () => {
                         <span
                           style={{
                             display: "inline-block",
-                            color: index % 2 == 0 ? "green" : "red",
+                            color: index % 2 === 0 ? "green" : "red",
                             marginTop: "5px",
                             transform:
                               index % 2 === 0
